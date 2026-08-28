@@ -12,9 +12,17 @@ import { profile } from "../data/content";
       </p>
     </div>
 
-    <h1>
-      <span>Paulina</span>
-      <span class="offset">Reller<span class="period">.</span></span>
+    <h1 class="name-row">
+      <span class="name-text">
+        <span>Paulina</span>
+        <span class="offset">Reller<span class="period">.</span></span>
+      </span>
+      <dotlottie-wc
+        src="/animations/Artist.lottie"
+        autoplay
+        loop
+        class="hero-lottie"
+      ></dotlottie-wc>
     </h1>
 
     <div class="hero-bottom">
@@ -84,8 +92,22 @@ import { profile } from "../data/content";
     line-height: 0.92;
   }
 
-  .hero h1 > span {
+  .hero h1.name-row {
+    align-items: center;
+    justify-content: space-between;
+    gap: 2vw;
+    display: flex;
+  }
+
+  .name-text > span {
     display: block;
+  }
+
+  .hero-lottie {
+    aspect-ratio: 4 / 3;
+    width: auto;
+    height: 1.9em;
+    flex-shrink: 0;
   }
 
   .offset {
@@ -213,6 +235,15 @@ import { profile } from "../data/content";
       line-height: 0.88;
     }
 
+    .hero h1.name-row {
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .hero-lottie {
+      height: 1.3em;
+    }
+
     .offset {
       padding-left: 0;
     }
@@ -239,3 +270,7 @@ import { profile } from "../data/content";
     }
   }
 </style>
+
+<script>
+  import "@lottiefiles/dotlottie-wc";
+</script>

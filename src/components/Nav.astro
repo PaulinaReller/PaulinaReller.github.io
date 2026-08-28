@@ -1,6 +1,4 @@
 ---
-import { profile } from "../data/content";
-
 const links = [
   { label: "Work", href: "#work" },
   { label: "About", href: "#about" },
@@ -9,18 +7,10 @@ const links = [
 ---
 
 <header class="header">
-  <a href="#top" class="brand">
-    <span>P</span><span class="brand-mark">R</span>
-    <span class="brand-suffix">Portfolio</span>
-  </a>
-
   <nav id="site-nav">
     {
-      links.map((link, i) => (
-        <a href={link.href}>
-          <sup>{String(i + 1).padStart(2, "0")}</sup>
-          {link.label}
-        </a>
+      links.map((link) => (
+        <a href={link.href}>{link.label}</a>
       ))
     }
     <a href="#contact" class="contact">
@@ -37,47 +27,33 @@ const links = [
 <style>
   .header {
     border-bottom: 1px solid var(--ink);
-    grid-template-columns: 1fr 2fr;
     align-items: center;
+    justify-content: space-between;
     height: 92px;
-    display: grid;
+    display: flex;
     padding-inline: var(--pad);
     position: sticky;
     top: 0;
     background: var(--paper);
     z-index: 80;
+    opacity: 1;
+    transition: height 0.25s ease, opacity 0.25s ease;
   }
 
-  .brand {
-    letter-spacing: -0.08em;
-    align-items: center;
-    width: max-content;
-    font-size: 1.35rem;
-    font-weight: 800;
-    text-decoration: none;
-    display: flex;
+  .header.scrolled {
+    height: 56px;
+    opacity: 0.7;
   }
 
-  .brand-mark {
-    color: var(--acid);
-    margin-inline: 0.1rem;
-  }
-
-  .brand-suffix {
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    align-self: flex-end;
-    margin-left: 0.45rem;
-    padding-bottom: 0.15rem;
-    font-family: "DM Mono", monospace;
-    font-size: 0.62rem;
-    font-weight: 500;
+  .header.scrolled:hover {
+    opacity: 1;
   }
 
   nav {
     grid-template-columns: repeat(3, 1fr) 1.4fr;
     align-items: center;
     height: 100%;
+    flex: 1;
     display: grid;
   }
 
@@ -97,13 +73,6 @@ const links = [
     background: #1111110e;
   }
 
-  nav sup {
-    color: var(--acid);
-    margin-right: 0.55rem;
-    font-family: "DM Mono", monospace;
-    font-size: 0.55rem;
-  }
-
   .contact {
     background: var(--ink);
     color: var(--paper);
@@ -118,17 +87,20 @@ const links = [
   .menu-toggle {
     background: 0 0;
     border: 0;
-    justify-self: end;
     display: none;
   }
 
   @media (width <= 850px) {
     .header {
-      grid-template-columns: 1fr 1fr;
       height: 72px;
     }
 
+    .header.scrolled {
+      height: 48px;
+    }
+
     .menu-toggle {
+      margin-left: auto;
       display: block;
     }
 
@@ -170,4 +142,9 @@ const links = [
       toggle?.setAttribute("aria-expanded", "false");
     })
   );
+
+  const header = document.querySelector(".header");
+  const setScrolled = () => header?.classList.toggle("scrolled", window.scrollY > 40);
+  setScrolled();
+  document.addEventListener("scroll", setScrolled, { passive: true });
 </script>

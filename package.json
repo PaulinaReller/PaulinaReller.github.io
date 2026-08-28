@@ -12,6 +12,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@lottiefiles/dotlottie-wc": "^0.9.28",
     "astro": "^7.2.9"
   },
   "allowScripts": {
