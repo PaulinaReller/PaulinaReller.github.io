@@ -14,7 +14,7 @@ export function getStaticPaths() {
 const { project } = Astro.props;
 ---
 
-<Layout title={`${project.title} — Paulina Reller`} description={project.summary}>
+<Layout title={`${project.title} - Paulina Reller`} description={project.summary}>
   <Nav />
   <main id="main">
     <section class="case-hero">
@@ -27,7 +27,7 @@ const { project } = Astro.props;
         <div class="meta">
           <div>
             <span class="mono label">{project.client ? "Client" : "Org"}</span>
-            <p>{project.client ? `${project.client} — ${project.org}` : project.org}</p>
+            <p>{project.client ? `${project.client} - ${project.org}` : project.org}</p>
           </div>
           <div>
             <span class="mono label">Role</span>
@@ -54,19 +54,19 @@ const { project } = Astro.props;
               <source src={project.hero.src} type="video/mp4" />
             </video>
           ) : project.hero.type === "image" ? (
-            <img src={project.hero.src} alt={`${project.title} — product screen`} />
+            <img src={project.hero.src} alt={`${project.title} - product screen`} />
           ) : project.hero.type === "orb" ? (
             <canvas
               class="hero-canvas"
               data-orb
-              aria-label={`${project.title} — neural network sphere visualization`}
+              aria-label={`${project.title} - neural network sphere visualization`}
             />
           ) : (
             <canvas
               class="hero-canvas"
               data-typo
               data-words={JSON.stringify(project.hero.words)}
-              aria-label={`${project.title} — animated series topics: ${project.hero.words.join(", ")}`}
+              aria-label={`${project.title} - animated series topics: ${project.hero.words.join(", ")}`}
             />
           )
         }
@@ -131,7 +131,7 @@ const { project } = Astro.props;
               </div>
               <iframe
                 src={project.demo.src}
-                title={`${project.title} — live demo`}
+                title={`${project.title} - live demo`}
                 loading="lazy"
               />
             </div>
@@ -145,7 +145,7 @@ const { project } = Astro.props;
                       <span />
                       <span />
                     </div>
-                    <img src={screen.src} alt={`${project.title} — ${screen.label}`} />
+                    <img src={screen.src} alt={`${project.title} - ${screen.label}`} />
                   </div>
                   <figcaption class="mono">{screen.label}</figcaption>
                 </figure>
@@ -182,7 +182,7 @@ const { project } = Astro.props;
           <blockquote>
             <p>“{project.quote.text}”</p>
             <cite class="mono">
-              {project.quote.author} — {project.quote.role}
+              {project.quote.author} - {project.quote.role}
             </cite>
           </blockquote>
         </div>

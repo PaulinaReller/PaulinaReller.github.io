@@ -5,10 +5,8 @@ import { profile } from "../data/content";
 <section id="top" class="hero">
   <div class="container">
     <div class="hero-top">
-      <span class="eyebrow">Open to opportunities</span>
       <p class="hero-note mono">
-        {profile.role} — currently working student at Impulse Audio Lab,
-        based in {profile.location}.
+        {profile.role} - currently working at Impulse Audio Lab
       </p>
     </div>
 
@@ -34,31 +32,12 @@ import { profile } from "../data/content";
 </section>
 
 <div class="statement">
-  <div class="ticker mono">
-    <div class="ticker-track">
-      <div class="ticker-group">
-        <span>Code</span>
-        <span>Design</span>
-        <span>Research</span>
-        <span>Illustration</span>
-        <span>Data Viz</span>
-      </div>
-      <div class="ticker-group" aria-hidden="true">
-        <span>Code</span>
-        <span>Design</span>
-        <span>Research</span>
-        <span>Illustration</span>
-        <span>Data Viz</span>
-      </div>
-    </div>
-  </div>
-
   <div class="container statement-grid">
     <h2>
       Less polish. <em>More</em> proof it works.
     </h2>
     <p>
-      I move between code and visual design — building modular, data-heavy
+      I move between code and visual design - building modular, data-heavy
       frontends by day, and murals, editorial illustration, and product
       concepts on the side.
     </p>
@@ -72,9 +51,8 @@ import { profile } from "../data/content";
   }
 
   .hero-top {
-    justify-content: space-between;
+    justify-content: flex-end;
     display: flex;
-    gap: 2rem;
   }
 
   .hero-note {
@@ -138,7 +116,7 @@ import { profile } from "../data/content";
   }
 
   .hero-bottom p:nth-child(2) {
-    max-width: 31rem;
+    white-space: nowrap;
     margin: 0;
     font-size: clamp(1rem, 1.5vw, 1.35rem);
   }
@@ -151,44 +129,6 @@ import { profile } from "../data/content";
     background: var(--ink);
     color: var(--paper);
     overflow: hidden;
-  }
-
-  .ticker {
-    width: 100%;
-    color: var(--acid);
-    text-transform: uppercase;
-    border-bottom: 1px solid #444;
-    padding-block: 0.65rem;
-    font-size: clamp(1rem, 2vw, 1.5rem);
-    font-weight: 700;
-    overflow: hidden;
-  }
-
-  .ticker-track {
-    will-change: transform;
-    width: max-content;
-    animation: 24s linear infinite marquee;
-    display: flex;
-  }
-
-  .ticker-group {
-    flex-shrink: 0;
-    display: flex;
-  }
-
-  .ticker span {
-    white-space: nowrap;
-    padding-right: 3rem;
-    display: block;
-  }
-
-  @keyframes marquee {
-    0% {
-      transform: translate(0);
-    }
-    to {
-      transform: translate(-50%);
-    }
   }
 
   .statement-grid {

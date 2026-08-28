@@ -22,7 +22,7 @@ import { projects } from "../data/content";
                 {project.title}
                 <span class="arrow">↗</span>
               </h3>
-              <p class="subtitle">{project.subtitle} — {project.org}</p>
+              <p class="subtitle">{project.subtitle} - {project.org}</p>
               <p class="description">{project.description}</p>
               <div class="tags">
                 {project.tags.map((tag) => (
@@ -34,7 +34,7 @@ import { projects } from "../data/content";
               <blockquote class="quote">
                 <p>“{project.quote.text}”</p>
                 <cite class="mono">
-                  {project.quote.author} — {project.quote.role}
+                  {project.quote.author} - {project.quote.role}
                 </cite>
               </blockquote>
             )}
