@@ -53,8 +53,21 @@ const { project } = Astro.props;
             >
               <source src={project.hero.src} type="video/mp4" />
             </video>
-          ) : (
+          ) : project.hero.type === "image" ? (
             <img src={project.hero.src} alt={`${project.title} — product screen`} />
+          ) : project.hero.type === "orb" ? (
+            <canvas
+              class="hero-canvas"
+              data-orb
+              aria-label={`${project.title} — neural network sphere visualization`}
+            />
+          ) : (
+            <canvas
+              class="hero-canvas"
+              data-typo
+              data-words={JSON.stringify(project.hero.words)}
+              aria-label={`${project.title} — animated series topics: ${project.hero.words.join(", ")}`}
+            />
           )
         }
       </div>
@@ -238,11 +251,22 @@ const { project } = Astro.props;
     overflow: hidden;
   }
 
+  .hero-image:has(canvas[data-typo]) {
+    aspect-ratio: 21 / 6;
+  }
+
   .hero-image video,
   .hero-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  .hero-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: var(--ink);
   }
 
   .statement {
@@ -256,7 +280,8 @@ const { project } = Astro.props;
 
   .statement-grid {
     grid-template-columns: 1fr 2fr;
-    padding-block: clamp(4rem, 8vw, 7rem);
+    padding-top: clamp(4rem, 8vw, 7rem);
+    padding-bottom: clamp(4rem, 8vw, 7rem);
     gap: 2rem;
     display: grid;
   }
@@ -576,3 +601,277 @@ const { project } = Astro.props;
     }
   }
 </style>
+
+<script>
+  const orbCanvas = document.querySelector<HTMLCanvasElement>("canvas[data-orb]");
+  const typoCanvas = document.querySelector<HTMLCanvasElement>("canvas[data-typo]");
+
+  if (orbCanvas) {
+    const canvas = orbCanvas;
+    const ctx = canvas.getContext("2d")!;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const styles = getComputedStyle(document.documentElement);
+    const acid = styles.getPropertyValue("--acid").trim() || "#ff4d00";
+    const paper = styles.getPropertyValue("--paper").trim() || "#f1f0ea";
+
+    type Point = { x: number; y: number; z: number };
+
+    const COUNT = 170;
+    const LINK_DIST = 0.62;
+    const points: Point[] = [];
+
+    // Fibonacci sphere distribution
+    const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+    for (let i = 0; i < COUNT; i++) {
+      const y = 1 - (i / (COUNT - 1)) * 2;
+      const radius = Math.sqrt(1 - y * y);
+      const theta = goldenAngle * i;
+      points.push({ x: Math.cos(theta) * radius, y, z: Math.sin(theta) * radius });
+    }
+
+    let width = 0;
+    let height = 0;
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    function resize() {
+      const rect = canvas!.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
+      canvas!.width = width * dpr;
+      canvas!.height = height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    resize();
+    window.addEventListener("resize", resize);
+
+    function hexToRgb(hex: string) {
+      const clean = hex.replace("#", "");
+      const bigint = parseInt(clean.length === 3
+        ? clean.split("").map((c) => c + c).join("")
+        : clean, 16);
+      return { r: (bigint >> 16) & 255, g: (bigint >> 8) & 255, b: bigint & 255 };
+    }
+
+    const acidRgb = hexToRgb(acid);
+    const paperRgb = hexToRgb(paper);
+
+    function draw(t: number) {
+      ctx.clearRect(0, 0, width, height);
+
+      const scale = Math.min(width, height) * 0.58;
+      const cx = width / 2;
+      const cy = height / 2;
+      const pulse = 1 + Math.sin(t * 0.9) * 0.02;
+
+      const ay = t * 0.18;
+      const ax = Math.sin(t * 0.25) * 0.35 + 0.15;
+      const cosY = Math.cos(ay), sinY = Math.sin(ay);
+      const cosX = Math.cos(ax), sinX = Math.sin(ax);
+
+      const projected: { x: number; y: number; z: number; p: Point }[] = [];
+
+      for (const p of points) {
+        // rotate around Y
+        let x = p.x * cosY - p.z * sinY;
+        let z = p.x * sinY + p.z * cosY;
+        let y = p.y;
+        // rotate around X
+        const y2 = y * cosX - z * sinX;
+        const z2 = y * sinX + z * cosX;
+        y = y2;
+        z = z2;
+
+        const perspective = 1 / (2 - z);
+        const sx = cx + x * scale * pulse * perspective;
+        const sy = cy + y * scale * pulse * perspective;
+        projected.push({ x: sx, y: sy, z, p });
+      }
+
+      projected.sort((a, b) => a.z - b.z);
+
+      // connections
+      for (let i = 0; i < projected.length; i++) {
+        for (let j = i + 1; j < projected.length; j++) {
+          const a = projected[i].p;
+          const b = projected[j].p;
+          const dx = a.x - b.x, dy = a.y - b.y, dz = a.z - b.z;
+          const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+          if (dist < LINK_DIST) {
+            const alpha = (1 - dist / LINK_DIST) * 0.35;
+            const depth = (projected[i].z + projected[j].z) / 2;
+            const glow = 0.5 + depth * 0.5;
+            ctx.strokeStyle = `rgba(${paperRgb.r}, ${paperRgb.g}, ${paperRgb.b}, ${alpha * glow})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(projected[i].x, projected[i].y);
+            ctx.lineTo(projected[j].x, projected[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // nodes
+      for (const node of projected) {
+        const depth = (node.z + 1) / 2;
+        const r = 1.1 + depth * 2;
+        const flicker = 0.55 + Math.sin(t * 2 + node.p.x * 6) * 0.25;
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(${acidRgb.r}, ${acidRgb.g}, ${acidRgb.b}, ${0.35 + depth * 0.55 * flicker})`;
+        ctx.arc(node.x, node.y, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    if (reduceMotion) {
+      draw(0);
+    } else {
+      let start: number | null = null;
+      function frame(now: number) {
+        if (start === null) start = now;
+        const t = (now - start) / 1000;
+        draw(t);
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+  }
+
+  if (typoCanvas) {
+    const canvas = typoCanvas;
+    const ctx = canvas.getContext("2d")!;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const styles = getComputedStyle(document.documentElement);
+    const acid = styles.getPropertyValue("--acid").trim() || "#ff4d00";
+    const paper = styles.getPropertyValue("--paper").trim() || "#f1f0ea";
+    const ink = styles.getPropertyValue("--ink").trim() || "#111111";
+
+    const words: string[] = JSON.parse(canvas.dataset.words || "[]");
+    const STAGGER_MS = 420;
+    const ENTER_MS = 320;
+    const HOLD_MS = 1100;
+    const EXIT_MS = 400;
+    const buildEnd = Math.max(0, words.length - 1) * STAGGER_MS + ENTER_MS;
+    const cycleLength = buildEnd + HOLD_MS + EXIT_MS;
+
+    let width = 0;
+    let height = 0;
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    function resize() {
+      const rect = canvas!.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
+      canvas!.width = width * dpr;
+      canvas!.height = height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    resize();
+    window.addEventListener("resize", resize);
+
+    function easeOutBack(x: number) {
+      const c1 = 1.5, c3 = c1 + 1;
+      return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2);
+    }
+
+    function draw(t: number) {
+      ctx.fillStyle = ink;
+      ctx.fillRect(0, 0, width, height);
+      if (!words.length) return;
+
+      const cycle = t % cycleLength;
+
+      let fontSize = Math.min(width * 0.1, height * 0.5);
+      ctx.font = `800 ${fontSize}px Helvetica, Arial, sans-serif`;
+      const spacing = fontSize * 0.32;
+      let totalWidth = words.reduce((sum, w) => sum + ctx.measureText(w).width, 0)
+        + spacing * (words.length - 1);
+
+      const maxWidth = width * 0.92;
+      if (totalWidth > maxWidth) {
+        fontSize *= maxWidth / totalWidth;
+        ctx.font = `800 ${fontSize}px Helvetica, Arial, sans-serif`;
+        totalWidth = words.reduce((sum, w) => sum + ctx.measureText(w).width, 0)
+          + fontSize * 0.32 * (words.length - 1);
+      }
+
+      const scaledSpacing = fontSize * 0.32;
+      const barHeight = Math.max(fontSize * 0.07, 3);
+      const barY = fontSize * 0.42;
+
+      let lineOpacity = 1;
+      let lineScale = 1;
+      if (cycle > buildEnd + HOLD_MS) {
+        const p = (cycle - buildEnd - HOLD_MS) / EXIT_MS;
+        lineOpacity = 1 - p;
+        lineScale = 1 - p * 0.05;
+      }
+
+      ctx.textBaseline = "middle";
+      ctx.textAlign = "left";
+
+      let x = width / 2 - totalWidth / 2;
+      const cy = height / 2;
+
+      ctx.save();
+      ctx.globalAlpha = lineOpacity;
+      ctx.translate(0, cy);
+      ctx.scale(lineScale, lineScale);
+      ctx.translate(0, -cy);
+
+      for (let i = 0; i < words.length; i++) {
+        const word = words[i];
+        const appearAt = i * STAGGER_MS;
+        const wordWidth = ctx.measureText(word).width;
+
+        let wScale = 1;
+        let wOpacity = 1;
+        let barProgress = 1;
+
+        if (cycle < appearAt) {
+          wOpacity = 0;
+          barProgress = 0;
+        } else if (cycle < appearAt + ENTER_MS) {
+          const p = (cycle - appearAt) / ENTER_MS;
+          wScale = 0.7 + easeOutBack(p) * 0.3;
+          wOpacity = Math.min(p * 1.6, 1);
+          barProgress = p;
+        }
+
+        if (wOpacity > 0) {
+          ctx.save();
+          ctx.globalAlpha = lineOpacity * wOpacity;
+          ctx.translate(x + wordWidth / 2, cy);
+          ctx.scale(wScale, wScale);
+
+          ctx.fillStyle = acid;
+          ctx.fillRect(-wordWidth / 2, barY, wordWidth * barProgress, barHeight);
+
+          ctx.fillStyle = paper;
+          ctx.fillText(word, -wordWidth / 2, 0);
+          ctx.restore();
+        }
+
+        x += wordWidth + scaledSpacing;
+      }
+
+      ctx.restore();
+    }
+
+    if (reduceMotion) {
+      draw(0);
+    } else {
+      let start: number | null = null;
+      function frame(now: number) {
+        if (start === null) start = now;
+        const t = now - start;
+        draw(t);
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+  }
+</script>

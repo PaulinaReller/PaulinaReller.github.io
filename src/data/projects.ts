@@ -1,6 +1,8 @@
 export type ProjectHero =
   | { type: "video"; src: string; poster: string }
-  | { type: "image"; src: string };
+  | { type: "image"; src: string }
+  | { type: "orb" }
+  | { type: "typo"; words: string[] };
 
 export type ProjectDetail = {
   slug: string;
@@ -31,9 +33,8 @@ export const projectDetails: Record<string, ProjectDetail> = {
     period: "07/2025 — Present",
     role: "Solo full-stack developer — architecture, backend, frontend, deployment",
     hero: {
-      type: "video",
-      src: "/projects/studio-b/hero-barbara.mp4",
-      poster: "/projects/studio-b/hero-poster.jpg",
+      type: "typo",
+      words: ["Strength", "Mobility", "Balance", "Stretch", "Recovery"],
     },
     screens: [
       { src: "/projects/studio-b/screens/home.jpg", label: "Landing" },
@@ -118,10 +119,7 @@ export const projectDetails: Record<string, ProjectDetail> = {
     org: "Independent — pro bono",
     period: "08/2025 — 09/2025",
     role: "Solo developer — technical concept, architecture, and prototype build (pro bono)",
-    hero: {
-      type: "image",
-      src: "/projects/kim4u/hero-placeholder.svg",
-    },
+    hero: { type: "orb" },
     summary:
       "Pia Greilich was building the founding idea for an AI-based healthcare ecosystem for endometriosis: a way for people navigating the condition to get clear, trustworthy answers without wading through forums or generic web search. She brought me on pro bono to turn that vision into a working technical prototype.",
     problem:
