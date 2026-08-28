@@ -50,8 +50,8 @@ export const projects = [
     description:
       "Architected and built a full-stack subscription video platform from scratch using Next.js, TypeScript, and Supabase (Postgres, Auth, RLS), with Stripe for subscription billing and Cloudflare for signed video delivery.",
     tags: ["Next.js", "TypeScript", "Supabase", "Stripe", "Cloudflare"],
-    href: "#",
-    image: "/projects/avenue.jpg",
+    href: "/work/avenue",
+    image: "/projects/avenue/hero-poster.jpg",
   },
   {
     title: "Endometriosis App",
@@ -66,14 +66,14 @@ export const projects = [
   },
   {
     title: "EVx Suite",
-    subtitle: "Vehicle Telemetry Data Visualization",
+    subtitle: "Real-Time Sound Design for Electric Vehicles",
     org: "Impulse Audio Lab",
     period: "10/2024 — Present",
     description:
-      "Interactive data visualization tools for vehicle telemetry, built as modular, component-based frontends in Svelte.",
-    tags: ["Svelte", "JavaScript", "Data Visualization"],
-    href: "#",
-    image: "/projects/evx.jpg",
+      "A real-time sound-design tool for synthetic EV motor sound, driven by live vehicle telemetry. Owned the sample-library Browser panel — Svelte, component-based architecture — on an ~8-person C++/Svelte team.",
+    tags: ["Svelte", "TypeScript", "Component Library", "C++ (integration)"],
+    href: "/work/evx-suite",
+    image: "/projects/evx/full-app.jpg",
   },
 ];
 

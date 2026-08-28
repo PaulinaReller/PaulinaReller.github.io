@@ -2,27 +2,240 @@
 import { profile } from "../data/content";
 ---
 
-<section
-  id="top"
-  class="min-h-screen flex flex-col justify-between px-6 md:px-12 pt-32 pb-12"
->
-  <div class="flex-1 flex items-center">
-    <h1 class="font-display font-medium leading-[0.95] tracking-tight text-[13vw] md:text-[7.5vw]">
-      {profile.name}
-    </h1>
-  </div>
+<section id="top" class="hero">
+  <div class="container">
+    <div class="hero-top">
+      <span class="eyebrow">Open to opportunities</span>
+      <p class="hero-note mono">
+        {profile.role} — currently working student at Impulse Audio Lab,
+        based in {profile.location}.
+      </p>
+    </div>
 
-  <div class="grid md:grid-cols-3 gap-6 md:gap-12 items-end">
-    <p class="font-display text-2xl md:text-3xl leading-tight max-w-md">
-      {profile.tagline}
-    </p>
-    <p class="text-sm opacity-60 leading-relaxed">
-      {profile.role}. Currently working student at Impulse Audio Lab, based
-      in {profile.location}.
-    </p>
-    <div class="flex md:justify-end items-end gap-2 text-sm opacity-60">
-      <span class="animate-pulse text-[color:var(--color-accent)]">●</span>
-      <span>Munich, Germany</span>
+    <h1>
+      <span>Paulina</span>
+      <span class="offset">Reller<span class="period">.</span></span>
+    </h1>
+
+    <div class="hero-bottom">
+      <p class="mono"><span class="orb"></span>{profile.location}</p>
+      <p>{profile.tagline}</p>
+      <a href="#work" class="button">See the work</a>
     </div>
   </div>
 </section>
+
+<div class="statement">
+  <div class="ticker mono">
+    <div class="ticker-track">
+      <div class="ticker-group">
+        <span>Code</span>
+        <span>Design</span>
+        <span>Research</span>
+        <span>Illustration</span>
+        <span>Data Viz</span>
+      </div>
+      <div class="ticker-group" aria-hidden="true">
+        <span>Code</span>
+        <span>Design</span>
+        <span>Research</span>
+        <span>Illustration</span>
+        <span>Data Viz</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="container statement-grid">
+    <h2>
+      Less polish. <em>More</em> proof it works.
+    </h2>
+    <p>
+      I move between code and visual design — building modular, data-heavy
+      frontends by day, and murals, editorial illustration, and product
+      concepts on the side.
+    </p>
+  </div>
+</div>
+
+<style>
+  .hero {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .hero-top {
+    justify-content: space-between;
+    display: flex;
+    gap: 2rem;
+  }
+
+  .hero-note {
+    width: 31%;
+    margin: 0;
+    font-size: 0.88rem;
+    text-align: right;
+  }
+
+  .hero h1 {
+    letter-spacing: -0.075em;
+    margin: 2vw 0;
+    font-size: clamp(4.7rem, 14.2vw, 14rem);
+    font-weight: 800;
+    line-height: 0.92;
+  }
+
+  .hero h1 > span {
+    display: block;
+  }
+
+  .offset {
+    padding-left: 8vw;
+  }
+
+  .period {
+    color: var(--acid);
+  }
+
+  .orb {
+    aspect-ratio: 1;
+    vertical-align: -0.05em;
+    background: var(--acid);
+    border-radius: 50%;
+    width: 0.68em;
+    margin-right: 0.4em;
+    display: inline-block;
+  }
+
+  .hero-bottom {
+    border-top: 1px solid var(--ink);
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: end;
+    gap: 2rem;
+    padding-top: 1.5rem;
+    display: grid;
+  }
+
+  .hero-bottom p:nth-child(2) {
+    max-width: 31rem;
+    margin: 0;
+    font-size: clamp(1rem, 1.5vw, 1.35rem);
+  }
+
+  .hero-bottom .button {
+    justify-self: end;
+  }
+
+  .statement {
+    background: var(--ink);
+    color: var(--paper);
+    overflow: hidden;
+  }
+
+  .ticker {
+    width: 100%;
+    color: var(--acid);
+    text-transform: uppercase;
+    border-bottom: 1px solid #444;
+    padding-block: 0.65rem;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    font-weight: 700;
+    overflow: hidden;
+  }
+
+  .ticker-track {
+    will-change: transform;
+    width: max-content;
+    animation: 24s linear infinite marquee;
+    display: flex;
+  }
+
+  .ticker-group {
+    flex-shrink: 0;
+    display: flex;
+  }
+
+  .ticker span {
+    white-space: nowrap;
+    padding-right: 3rem;
+    display: block;
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translate(0);
+    }
+    to {
+      transform: translate(-50%);
+    }
+  }
+
+  .statement-grid {
+    grid-template-columns: 1fr 3fr;
+    padding-top: clamp(5rem, 10vw, 10rem);
+    padding-bottom: clamp(5rem, 10vw, 10rem);
+    display: grid;
+  }
+
+  .statement h2 {
+    letter-spacing: -0.075em;
+    grid-column: 2;
+    margin: 0;
+    font-size: clamp(4rem, 10vw, 10rem);
+    line-height: 0.9;
+    font-weight: 800;
+  }
+
+  .statement h2 em {
+    color: var(--acid);
+    font-family: Georgia, serif;
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  .statement-grid > p:last-child {
+    grid-column: 2;
+    max-width: 36rem;
+    margin: 4rem 0 0;
+    font-size: clamp(1.2rem, 2vw, 1.8rem);
+  }
+
+  @media (width <= 800px) {
+    .hero-top {
+      display: block;
+    }
+
+    .hero-note {
+      display: none;
+    }
+
+    .hero h1 {
+      font-size: clamp(4rem, 20vw, 8rem);
+      line-height: 0.88;
+    }
+
+    .offset {
+      padding-left: 0;
+    }
+
+    .hero-bottom {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-bottom .button {
+      justify-self: start;
+    }
+
+    .hero-bottom > p:first-child {
+      display: none;
+    }
+
+    .statement-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .statement h2,
+    .statement-grid > p:last-child {
+      grid-column: 1;
+    }
+  }
+</style>

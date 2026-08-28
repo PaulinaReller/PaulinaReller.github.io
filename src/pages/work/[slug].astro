@@ -1,0 +1,538 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+import { projectDetails } from "../../data/projects";
+
+export function getStaticPaths() {
+  return Object.values(projectDetails).map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+---
+
+<Layout title={`${project.title} — Paulina Reller`} description={project.summary}>
+  <Nav />
+  <main id="main">
+    <section class="case-hero">
+      <div class="container">
+        <a href="/#work" class="back mono">← Back to work</a>
+
+        <h1>{project.title}</h1>
+        <p class="subtitle">{project.subtitle}</p>
+
+        <div class="meta">
+          <div>
+            <span class="mono label">{project.client ? "Client" : "Org"}</span>
+            <p>{project.client ? `${project.client} — ${project.org}` : project.org}</p>
+          </div>
+          <div>
+            <span class="mono label">Role</span>
+            <p>{project.role}</p>
+          </div>
+          <div>
+            <span class="mono label">Timeline</span>
+            <p>{project.period}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        {
+          project.hero.type === "video" ? (
+            <video
+              autoplay
+              muted
+              loop
+              playsinline
+              poster={project.hero.poster}
+              aria-label={`${project.title} hero video loop`}
+            >
+              <source src={project.hero.src} type="video/mp4" />
+            </video>
+          ) : (
+            <img src={project.hero.src} alt={`${project.title} — product screen`} />
+          )
+        }
+      </div>
+    </section>
+
+    <section class="statement">
+      <div class="container statement-grid">
+        <span class="eyebrow eyebrow--light">The brief</span>
+        <p>{project.summary}</p>
+      </div>
+    </section>
+
+    <section class="problem">
+      <div class="container problem-grid">
+        <h2 class="section-title">The problem</h2>
+        <p>{project.problem}</p>
+      </div>
+    </section>
+
+    <section class="approach">
+      <div class="container">
+        <span class="eyebrow">How it's wired together</span>
+        <h2 class="section-title">Architecture</h2>
+
+        <div class="approach-grid">
+          {
+            project.approach.map((step, i) => (
+              <div class="approach-row">
+                <span class="mono index">{String(i + 1).padStart(2, "0")}</span>
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="mockups">
+      <div class="container">
+        <span class="eyebrow">See it in action</span>
+        <h2 class="section-title">
+          {project.demo ? "Live demo" : "Product screens"}
+        </h2>
+        <p class="mockups-note">
+          {project.demo ? project.demo.caption : project.screensNote}
+        </p>
+
+        {
+          project.demo ? (
+            <div class="demo-frame">
+              <div class="mockup-bar">
+                <span />
+                <span />
+                <span />
+                <span class="mockup-bar-label mono">
+                  {project.title.toLowerCase().replace(/\s+/g, "-")}
+                  /engine-player
+                </span>
+              </div>
+              <iframe
+                src={project.demo.src}
+                title={`${project.title} — live demo`}
+                loading="lazy"
+              />
+            </div>
+          ) : (
+            <div class="mockup-grid">
+              {project.screens.map((screen) => (
+                <figure class="mockup-card">
+                  <div class="mockup-frame">
+                    <div class="mockup-bar">
+                      <span />
+                      <span />
+                      <span />
+                    </div>
+                    <img src={screen.src} alt={`${project.title} — ${screen.label}`} />
+                  </div>
+                  <figcaption class="mono">{screen.label}</figcaption>
+                </figure>
+              ))}
+            </div>
+          )
+        }
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <span class="eyebrow eyebrow--light">What I built</span>
+        <h2 class="section-title">Features</h2>
+
+        <div class="feature-grid">
+          {
+            project.features.map((feature, i) => (
+              <article>
+                <b class="mono">{String(i + 1).padStart(2, "0")}</b>
+                <h3>{feature.title}</h3>
+                <p>{feature.description}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .case-hero {
+    padding-top: 2.5rem;
+    padding-bottom: 0;
+  }
+
+  .back {
+    color: var(--muted);
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 2rem;
+  }
+
+  .back:hover {
+    color: var(--ink);
+  }
+
+  h1 {
+    letter-spacing: -0.075em;
+    margin: 0;
+    font-size: clamp(3.5rem, 9vw, 8rem);
+    font-weight: 800;
+    line-height: 0.92;
+  }
+
+  .subtitle {
+    max-width: 40rem;
+    margin: 1.5rem 0 0;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    color: var(--muted);
+  }
+
+  .meta {
+    border-top: 1px solid var(--ink);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    display: grid;
+  }
+
+  .meta .label {
+    color: var(--muted);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .meta p {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .hero-image {
+    aspect-ratio: 16 / 9;
+    margin-top: 3rem;
+    overflow: hidden;
+  }
+
+  .hero-image video,
+  .hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .statement {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .eyebrow--light {
+    color: var(--paper);
+  }
+
+  .statement-grid {
+    grid-template-columns: 1fr 2fr;
+    padding-block: clamp(4rem, 8vw, 7rem);
+    gap: 2rem;
+    display: grid;
+  }
+
+  .statement-grid p {
+    letter-spacing: -0.02em;
+    margin: 0;
+    font-size: clamp(1.4rem, 2.8vw, 2.4rem);
+    line-height: 1.3;
+  }
+
+  .problem {
+    border-top: 1px solid var(--ink);
+    padding-block: clamp(5rem, 9vw, 8rem);
+  }
+
+  .problem-grid {
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+    display: grid;
+  }
+
+  .problem-grid p {
+    max-width: 40rem;
+    margin: 0;
+    font-size: 1.15rem;
+    line-height: 1.6;
+  }
+
+  .mockups {
+    border-top: 1px solid var(--ink);
+    padding-top: clamp(5rem, 9vw, 8rem);
+    padding-bottom: clamp(6rem, 10vw, 9rem);
+    overflow: hidden;
+  }
+
+  .mockups h2 {
+    margin-top: 1rem;
+  }
+
+  .mockups-note {
+    max-width: 34rem;
+    color: var(--muted);
+    margin: 1.5rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.55;
+  }
+
+  .mockup-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    justify-content: center;
+    gap: 3rem;
+    margin-top: clamp(4rem, 7vw, 6rem);
+    padding: 2rem 0 3rem;
+    display: grid;
+  }
+
+  .mockup-card {
+    max-width: 26rem;
+    margin: 0 auto;
+    perspective: 1600px;
+  }
+
+  .mockup-frame {
+    transform: rotateY(-14deg) rotateX(4deg) rotateZ(1deg);
+    transform-style: preserve-3d;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    box-shadow: 1.5rem 2rem 2.5rem -1.75rem #11111145;
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .mockup-card:nth-child(2) .mockup-frame {
+    transform: rotateY(0deg) rotateX(2deg) translateY(-1rem);
+  }
+
+  .mockup-card:nth-child(3) .mockup-frame {
+    transform: rotateY(14deg) rotateX(4deg) rotateZ(-1deg);
+  }
+
+  .mockup-card:hover .mockup-frame {
+    transform: rotateY(0deg) rotateX(0deg) translateY(-0.5rem) scale(1.03);
+    box-shadow: 1.5rem 2.5rem 3rem -1.5rem #11111160;
+  }
+
+  .mockup-bar {
+    background: var(--ink);
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 0.75rem;
+    display: flex;
+  }
+
+  .mockup-bar span {
+    background: var(--paper);
+    opacity: 0.4;
+    border-radius: 50%;
+    width: 0.5rem;
+    height: 0.5rem;
+    display: block;
+  }
+
+  .mockup-bar span:first-child {
+    background: var(--acid);
+    opacity: 1;
+  }
+
+  .mockup-bar-label {
+    color: var(--muted);
+    background: none !important;
+    border-radius: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    opacity: 1 !important;
+    margin-left: 0.5rem;
+  }
+
+  .demo-frame {
+    border: 1px solid var(--line);
+    background: var(--paper);
+    box-shadow: 1.5rem 2rem 2.5rem -1.75rem #11111145;
+    overflow: hidden;
+  }
+
+  .demo-frame iframe {
+    width: 100%;
+    height: clamp(28rem, 60vw, 42rem);
+    border: 0;
+    display: block;
+  }
+
+  .mockup-frame img {
+    width: 100%;
+    display: block;
+  }
+
+  .mockup-card figcaption {
+    color: var(--muted);
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+
+  .approach {
+    border-top: 1px solid var(--ink);
+    padding-block: clamp(5rem, 9vw, 8rem);
+  }
+
+  .approach h2 {
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .approach-grid {
+    border-top: 1px solid var(--ink);
+  }
+
+  .approach-row {
+    border-bottom: 1px solid var(--line);
+    grid-template-columns: 3rem 1fr 2fr;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding-block: 1.75rem;
+    display: grid;
+  }
+
+  .approach-row .index {
+    color: var(--acid);
+  }
+
+  .approach-row h3 {
+    letter-spacing: -0.03em;
+    margin: 0;
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+  }
+
+  .approach-row p {
+    margin: 0;
+    max-width: 34rem;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  .features {
+    background: var(--ink);
+    color: var(--paper);
+    padding-block: clamp(5rem, 9vw, 8rem);
+  }
+
+  .features h2 {
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .feature-grid {
+    border-top: 1px solid var(--paper);
+    border-left: 1px solid var(--paper);
+    grid-template-columns: repeat(3, 1fr);
+    display: grid;
+  }
+
+  .feature-grid article {
+    border-right: 1px solid var(--paper);
+    border-bottom: 1px solid var(--paper);
+    flex-direction: column;
+    min-height: 260px;
+    padding: 1.5rem;
+    transition: background 0.3s, color 0.3s;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .feature-grid article:hover {
+    background: var(--acid);
+    color: var(--ink);
+  }
+
+  .feature-grid b {
+    letter-spacing: -0.08em;
+    color: var(--acid);
+    opacity: 0.25;
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 0.9;
+    transition: opacity 0.3s;
+    position: absolute;
+    top: 1.25rem;
+    right: 1rem;
+  }
+
+  .feature-grid article:hover b {
+    color: var(--ink);
+    opacity: 0.2;
+  }
+
+  .feature-grid h3 {
+    letter-spacing: -0.03em;
+    margin: auto 0 0.5rem;
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    line-height: 1.15;
+  }
+
+  .feature-grid p {
+    margin: 0;
+    max-width: 20rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    opacity: 0.85;
+  }
+
+  @media (width <= 800px) {
+    .meta {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    .statement-grid,
+    .problem-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .feature-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .mockup-grid {
+      grid-template-columns: 1fr;
+      gap: 4rem;
+    }
+
+    .mockup-frame,
+    .mockup-card:nth-child(2) .mockup-frame,
+    .mockup-card:nth-child(3) .mockup-frame {
+      transform: none;
+    }
+
+    .mockup-card:hover .mockup-frame {
+      transform: none;
+    }
+
+    .approach-row {
+      grid-template-columns: 2.5rem 1fr;
+    }
+
+    .approach-row h3 {
+      grid-column: 2;
+    }
+
+    .approach-row p {
+      grid-column: 2;
+    }
+  }
+</style>

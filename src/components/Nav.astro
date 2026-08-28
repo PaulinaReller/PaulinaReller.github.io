@@ -5,36 +5,169 @@ const links = [
   { label: "Work", href: "#work" },
   { label: "About", href: "#about" },
   { label: "Experience", href: "#experience" },
-  { label: "Contact", href: "#contact" },
 ];
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 mix-blend-difference">
-  <nav
-    class="flex items-center justify-between px-6 py-6 md:px-12 font-display"
-  >
-    <a href="#top" class="text-sm font-medium tracking-tight">
-      {profile.name}
-    </a>
-    <ul class="hidden md:flex items-center gap-8 text-sm">
-      {
-        links.map((link) => (
-          <li>
-            <a
-              href={link.href}
-              class="opacity-70 hover:opacity-100 transition-opacity"
-            >
-              {link.label}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-    <a
-      href="#contact"
-      class="text-sm border border-current rounded-full px-4 py-1.5 hover:opacity-70 transition-opacity"
-    >
-      Let's talk
+<header class="header">
+  <a href="#top" class="brand">
+    <span>P</span><span class="brand-mark">R</span>
+    <span class="brand-suffix">Portfolio</span>
+  </a>
+
+  <nav id="site-nav">
+    {
+      links.map((link, i) => (
+        <a href={link.href}>
+          <sup>{String(i + 1).padStart(2, "0")}</sup>
+          {link.label}
+        </a>
+      ))
+    }
+    <a href="#contact" class="contact">
+      <span>Let's talk</span>
+      <span>↗</span>
     </a>
   </nav>
+
+  <button class="menu-toggle mono" id="menu-toggle" aria-expanded="false" aria-controls="site-nav">
+    Menu +
+  </button>
 </header>
+
+<style>
+  .header {
+    border-bottom: 1px solid var(--ink);
+    grid-template-columns: 1fr 2fr;
+    align-items: center;
+    height: 92px;
+    display: grid;
+    padding-inline: var(--pad);
+    position: sticky;
+    top: 0;
+    background: var(--paper);
+    z-index: 80;
+  }
+
+  .brand {
+    letter-spacing: -0.08em;
+    align-items: center;
+    width: max-content;
+    font-size: 1.35rem;
+    font-weight: 800;
+    text-decoration: none;
+    display: flex;
+  }
+
+  .brand-mark {
+    color: var(--acid);
+    margin-inline: 0.1rem;
+  }
+
+  .brand-suffix {
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    align-self: flex-end;
+    margin-left: 0.45rem;
+    padding-bottom: 0.15rem;
+    font-family: "DM Mono", monospace;
+    font-size: 0.62rem;
+    font-weight: 500;
+  }
+
+  nav {
+    grid-template-columns: repeat(3, 1fr) 1.4fr;
+    align-items: center;
+    height: 100%;
+    display: grid;
+  }
+
+  nav a {
+    border-left: 1px solid var(--line);
+    align-items: center;
+    height: 100%;
+    padding-inline: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+    display: flex;
+    position: relative;
+  }
+
+  nav a:hover {
+    background: #1111110e;
+  }
+
+  nav sup {
+    color: var(--acid);
+    margin-right: 0.55rem;
+    font-family: "DM Mono", monospace;
+    font-size: 0.55rem;
+  }
+
+  .contact {
+    background: var(--ink);
+    color: var(--paper);
+    justify-content: space-between;
+  }
+
+  .contact:hover {
+    background: var(--acid);
+    color: var(--ink);
+  }
+
+  .menu-toggle {
+    background: 0 0;
+    border: 0;
+    justify-self: end;
+    display: none;
+  }
+
+  @media (width <= 850px) {
+    .header {
+      grid-template-columns: 1fr 1fr;
+      height: 72px;
+    }
+
+    .menu-toggle {
+      display: block;
+    }
+
+    nav {
+      z-index: 90;
+      background: var(--paper);
+      border-bottom: 1px solid var(--ink);
+      display: none;
+      position: fixed;
+      inset: 72px 0 auto;
+      grid-template-columns: 1fr;
+    }
+
+    nav.open {
+      display: grid;
+    }
+
+    nav a {
+      border-left: 0;
+      border-top: 1px solid var(--line);
+      height: 64px;
+      padding-inline: var(--pad);
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById("menu-toggle");
+  const nav = document.getElementById("site-nav");
+
+  toggle?.addEventListener("click", () => {
+    const isOpen = nav?.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", String(Boolean(isOpen)));
+  });
+
+  nav?.querySelectorAll("a").forEach((link) =>
+    link.addEventListener("click", () => {
+      nav.classList.remove("open");
+      toggle?.setAttribute("aria-expanded", "false");
+    })
+  );
+</script>

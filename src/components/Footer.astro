@@ -1,9 +1,171 @@
 ---
 import { profile } from "../data/content";
 const year = new Date().getFullYear();
+
+const navLinks = [
+  { label: "Work", href: "#work" },
+  { label: "About", href: "#about" },
+  { label: "Experience", href: "#experience" },
+];
 ---
 
-<footer class="px-6 md:px-12 py-6 flex items-center justify-between text-xs opacity-40">
-  <span>© {year} {profile.name}</span>
-  <span>Built with Astro</span>
+<footer id="contact" class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <span class="eyebrow eyebrow--light">Get in touch</span>
+        <h2>
+          Let's build <span>something.</span>
+        </h2>
+      </div>
+      <a href={`mailto:${profile.email}`} class="circle-link">
+        <b>Say hi</b>
+        <span>↗</span>
+      </a>
+    </div>
+
+    <hr class="rule rule--light" />
+
+    <div class="footer-bottom">
+      <p class="mono">{profile.location}</p>
+      <div class="footer-links">
+        {navLinks.map((link) => <a href={link.href}>{link.label}</a>)}
+      </div>
+      <div class="footer-legal">
+        {
+          profile.socials.map((s) => (
+            <a
+              href={s.href}
+              target={s.href.startsWith("http") ? "_blank" : undefined}
+              rel="noreferrer"
+            >
+              {s.label}
+            </a>
+          ))
+        }
+      </div>
+      <p>© {year} {profile.name}</p>
+    </div>
+  </div>
 </footer>
+
+<style>
+  .footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding-top: clamp(5rem, 10vw, 10rem);
+  }
+
+  .eyebrow--light {
+    color: var(--paper);
+  }
+
+  .footer-top {
+    grid-template-columns: 2fr 1fr;
+    align-items: end;
+    padding-bottom: clamp(4rem, 8vw, 8rem);
+    display: grid;
+    gap: 2rem;
+  }
+
+  .footer-top h2 {
+    letter-spacing: -0.075em;
+    margin: 2rem 0 0;
+    font-size: clamp(4rem, 11vw, 11rem);
+    line-height: 0.9;
+    font-weight: 800;
+  }
+
+  .footer-top h2 span {
+    color: var(--acid);
+  }
+
+  .circle-link {
+    aspect-ratio: 1;
+    background: var(--acid);
+    width: clamp(10rem, 18vw, 17rem);
+    color: var(--ink);
+    border-radius: 50%;
+    flex-direction: column;
+    justify-content: center;
+    justify-self: end;
+    align-items: center;
+    text-decoration: none;
+    transition: transform 0.35s;
+    display: flex;
+    gap: 0.25rem;
+  }
+
+  .circle-link:hover {
+    transform: rotate(-8deg) scale(1.04);
+  }
+
+  .circle-link b {
+    font-size: 2rem;
+    font-weight: 400;
+  }
+
+  .rule--light {
+    border-top-color: #444;
+  }
+
+  .footer-bottom {
+    grid-template-columns: 1fr 2fr 1fr 2fr;
+    align-items: center;
+    gap: 1rem;
+    min-height: 100px;
+    padding-block: 1.5rem;
+    display: grid;
+  }
+
+  .footer-bottom p:last-child {
+    text-align: right;
+    margin: 0;
+  }
+
+  .footer-links,
+  .footer-legal {
+    flex-wrap: wrap;
+    gap: 1rem;
+    display: flex;
+  }
+
+  .footer-bottom a {
+    text-underline-offset: 0.28em;
+    text-decoration-thickness: 1px;
+  }
+
+  .footer-bottom a:hover {
+    color: var(--acid);
+  }
+
+  @media (width <= 900px) {
+    .footer-top {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .circle-link {
+      justify-self: start;
+    }
+
+    .footer-bottom {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-bottom p:last-child {
+      text-align: left;
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (width <= 600px) {
+    .footer-bottom {
+      grid-template-columns: 1fr;
+    }
+
+    .footer-bottom p:last-child {
+      text-align: left;
+    }
+  }
+</style>

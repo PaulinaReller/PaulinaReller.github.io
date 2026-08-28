@@ -2,31 +2,95 @@
 import { profile, education } from "../data/content";
 ---
 
-<section id="about" class="px-6 md:px-12 py-24 md:py-32 border-t border-white/10">
-  <div class="grid md:grid-cols-12 gap-8 md:gap-12">
-    <h2 class="md:col-span-4 font-display text-4xl md:text-6xl font-medium tracking-tight">
-      About
-    </h2>
-    <div class="md:col-span-6 md:col-start-6">
-      <p class="text-xl md:text-2xl font-display leading-snug">
-        {profile.about}
-      </p>
+<section id="about" class="about">
+  <div class="container">
+    <div class="about-grid">
+      <h2 class="section-title">About</h2>
+      <div class="about-body">
+        <p class="lede">{profile.about}</p>
 
-      <div class="mt-16 space-y-6">
-        {
-          education.map((edu) => (
-            <div class="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 border-t border-white/10 pt-4">
-              <div>
-                <p class="font-medium">{edu.school}</p>
-                <p class="text-sm opacity-60">{edu.degree}</p>
+        <div class="education">
+          {
+            education.map((edu) => (
+              <div class="edu-row">
+                <div>
+                  <p class="school">{edu.school}</p>
+                  <p class="degree">{edu.degree}</p>
+                </div>
+                <span class="mono period">{edu.period}</span>
               </div>
-              <span class="text-sm opacity-40 whitespace-nowrap">
-                {edu.period}
-              </span>
-            </div>
-          ))
-        }
+            ))
+          }
+        </div>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  .about {
+    padding-top: clamp(5rem, 10vw, 10rem);
+    padding-bottom: clamp(5rem, 10vw, 10rem);
+    border-top: 1px solid var(--ink);
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+    display: grid;
+  }
+
+  .lede {
+    letter-spacing: -0.02em;
+    margin: 0;
+    font-size: clamp(1.4rem, 2.6vw, 2.2rem);
+    line-height: 1.35;
+    max-width: 42rem;
+  }
+
+  .education {
+    margin-top: 4rem;
+  }
+
+  .edu-row {
+    border-top: 1px solid var(--line);
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    display: flex;
+  }
+
+  .edu-row:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .school {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .degree {
+    color: var(--muted);
+    margin: 0.2rem 0 0;
+    font-size: 0.95rem;
+  }
+
+  .period {
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  @media (width <= 800px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .edu-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.35rem;
+    }
+  }
+</style>
