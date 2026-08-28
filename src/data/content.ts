@@ -43,26 +43,36 @@ export const experience = [
 
 export const projects = [
   {
-    title: "Avenue",
+    title: "Studio B",
     subtitle: "Subscription Video Platform",
     org: "Wellbewell GmbH",
     period: "07/2025 — Present",
     description:
       "Architected and built a full-stack subscription video platform from scratch using Next.js, TypeScript, and Supabase (Postgres, Auth, RLS), with Stripe for subscription billing and Cloudflare for signed video delivery.",
     tags: ["Next.js", "TypeScript", "Supabase", "Stripe", "Cloudflare"],
-    href: "/work/avenue",
-    image: "/projects/avenue/hero-poster.jpg",
+    href: "/work/studio-b",
+    image: "/projects/studio-b/hero-poster.jpg",
+    quote: {
+      text: "[Placeholder quote from Barbara — to be replaced with her actual feedback.]",
+      author: "Barbara",
+      role: "Founder, Studio B",
+    },
   },
   {
-    title: "Endometriosis App",
-    subtitle: "Pro-bono Prototype",
+    title: "KIM4U",
+    subtitle: "RAG Chatbot Prototype for Endometriosis Support",
     org: "with Pia Greilich",
     period: "08/2025 — 09/2025",
     description:
-      "Designed and prototyped an app for individuals affected by endometriosis — pro-bono work focused on accessible, sensitive health UX.",
-    tags: ["UX Research", "Prototyping", "Figma", "Accessibility"],
-    href: "#",
-    image: "/projects/endo.jpg",
+      "Pro-bono technical prototype for a founder's healthcare-ecosystem idea: a retrieval-augmented chatbot that answers endometriosis questions from a curated knowledge base instead of the open web.",
+    tags: ["RAG", "Python", "ChromaDB", "OpenAI API", "Gradio"],
+    href: "/work/kim4u",
+    image: "/projects/kim4u/hero-placeholder.svg",
+    quote: {
+      text: "She worked in a structured, solution-oriented way, with a clear eye for product logic and usability — and could always explain complex technical decisions to me, as founder, without losing precision.",
+      author: "Pia Greilich",
+      role: "Founder",
+    },
   },
   {
     title: "EVx Suite",
@@ -74,6 +84,11 @@ export const projects = [
     tags: ["Svelte", "TypeScript", "Component Library", "C++ (integration)"],
     href: "/work/evx-suite",
     image: "/projects/evx/full-app.jpg",
+    quote: {
+      text: "We are consistently impressed by her exceptional technical grasp, paired with a real feel for design and creativity. She's highly engaged, always works in a structured way, and brings incredible enthusiasm to new topics and challenges.",
+      author: "Beat Rossmy",
+      role: "Lead Senior UI/UX Designer & Mentor, Impulse Audio Lab",
+    },
   },
 ];
 

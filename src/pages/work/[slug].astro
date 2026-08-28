@@ -93,6 +93,7 @@ const { project } = Astro.props;
       </div>
     </section>
 
+    {(project.demo || project.screens) && (
     <section class="mockups">
       <div class="container">
         <span class="eyebrow">See it in action</span>
@@ -141,6 +142,7 @@ const { project } = Astro.props;
         }
       </div>
     </section>
+    )}
 
     <section class="features">
       <div class="container">
@@ -160,6 +162,19 @@ const { project } = Astro.props;
         </div>
       </div>
     </section>
+
+    {project.quote && (
+      <section class="testimonial">
+        <div class="container">
+          <blockquote>
+            <p>“{project.quote.text}”</p>
+            <cite class="mono">
+              {project.quote.author} — {project.quote.role}
+            </cite>
+          </blockquote>
+        </div>
+      </section>
+    )}
 
   </main>
   <Footer />
@@ -490,6 +505,31 @@ const { project } = Astro.props;
     font-size: 0.95rem;
     line-height: 1.5;
     opacity: 0.85;
+  }
+
+  .testimonial {
+    background: var(--ink);
+    color: var(--paper);
+    border-top: 1px solid var(--ink);
+    padding-block: clamp(5rem, 9vw, 8rem);
+  }
+
+  .testimonial blockquote {
+    margin: 0;
+    max-width: 42rem;
+  }
+
+  .testimonial p {
+    letter-spacing: -0.02em;
+    margin: 0 0 1.5rem;
+    font-size: clamp(1.3rem, 2.5vw, 2rem);
+    line-height: 1.35;
+  }
+
+  .testimonial cite {
+    color: var(--paper);
+    opacity: 0.65;
+    font-style: normal;
   }
 
   @media (width <= 800px) {

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000">
+  <rect width="1600" height="1000" fill="#111111" />
+  <circle cx="1220" cy="230" r="340" fill="#ff4d00" opacity="0.12" />
+  <circle cx="260" cy="820" r="260" fill="#ff4d00" opacity="0.08" />
+  <text x="80" y="560" font-family="Helvetica, Arial, sans-serif" font-size="140" font-weight="700" fill="#f1f0ea" letter-spacing="-6">KIM4U</text>
+  <text x="80" y="630" font-family="Helvetica, Arial, sans-serif" font-size="34" fill="#a4a39c">Placeholder visual — real screens coming soon</text>
+</svg>

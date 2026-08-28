@@ -18,12 +18,13 @@ export type ProjectDetail = {
   problem: string;
   approach: { title: string; description: string }[];
   features: { title: string; description: string }[];
+  quote?: { text: string; author: string; role: string };
 };
 
 export const projectDetails: Record<string, ProjectDetail> = {
-  avenue: {
-    slug: "avenue",
-    title: "Avenue",
+  "studio-b": {
+    slug: "studio-b",
+    title: "Studio B",
     subtitle: "A subscription video platform for a fitness & wellness trainer",
     client: "Barbara",
     org: "Wellbewell GmbH",
@@ -31,14 +32,14 @@ export const projectDetails: Record<string, ProjectDetail> = {
     role: "Solo full-stack developer — architecture, backend, frontend, deployment",
     hero: {
       type: "video",
-      src: "/projects/avenue/hero-barbara.mp4",
-      poster: "/projects/avenue/hero-poster.jpg",
+      src: "/projects/studio-b/hero-barbara.mp4",
+      poster: "/projects/studio-b/hero-poster.jpg",
     },
     screens: [
-      { src: "/projects/avenue/screens/home.jpg", label: "Landing" },
-      { src: "/projects/avenue/screens/serien.jpg", label: "Series overview" },
+      { src: "/projects/studio-b/screens/home.jpg", label: "Landing" },
+      { src: "/projects/studio-b/screens/serien.jpg", label: "Series overview" },
       {
-        src: "/projects/avenue/screens/serien-detail.jpg",
+        src: "/projects/studio-b/screens/serien-detail.jpg",
         label: "Series detail",
       },
     ],
@@ -102,6 +103,83 @@ export const projectDetails: Record<string, ProjectDetail> = {
           "Episodes render a paywall instead of a player until the webhook-confirmed subscription status says otherwise — display-level today, hardened with signed URLs once Cloudflare Stream lands.",
       },
     ],
+    quote: {
+      text: "[Placeholder quote from Barbara — to be replaced with her actual feedback.]",
+      author: "Barbara",
+      role: "Founder, Studio B",
+    },
+  },
+  kim4u: {
+    slug: "kim4u",
+    title: "KIM4U",
+    subtitle:
+      "A RAG chatbot prototype supporting people affected by endometriosis",
+    client: "Pia Greilich",
+    org: "Independent — pro bono",
+    period: "08/2025 — 09/2025",
+    role: "Solo developer — technical concept, architecture, and prototype build (pro bono)",
+    hero: {
+      type: "image",
+      src: "/projects/kim4u/hero-placeholder.svg",
+    },
+    summary:
+      "Pia Greilich was building the founding idea for an AI-based healthcare ecosystem for endometriosis: a way for people navigating the condition to get clear, trustworthy answers without wading through forums or generic web search. She brought me on pro bono to turn that vision into a working technical prototype.",
+    problem:
+      "Endometriosis is under-researched and often poorly explained even in medical settings, so people affected by it end up self-diagnosing from scattered, inconsistent sources — never quite sure what's reliable. A general-purpose chatbot wasn't an option: in a health context it has to answer only from vetted material, say plainly when it doesn't know, and never improvise on someone's symptoms.",
+    approach: [
+      {
+        title: "Knowledge base",
+        description:
+          "Source material is split into topic-based JSON documents, each entry carrying its own text and metadata — the same structure I'd use for any domain, swapped here from household how-tos to endometriosis information.",
+      },
+      {
+        title: "Vector store (Chroma)",
+        description:
+          "Every document is embedded into a ChromaDB collection at startup. An incoming question is embedded the same way and matched against the closest chunks by similarity, so retrieval finds the right passage instead of a keyword hit.",
+      },
+      {
+        title: "Retrieval-augmented generation",
+        description:
+          "The top matching chunks are injected into a system message as grounding context, alongside a strict persona-and-tone system prompt, then passed to OpenAI's gpt-4o-mini, which streams its answer back token by token.",
+      },
+      {
+        title: "Guardrails over confidence",
+        description:
+          "The system prompt is explicit: never invent an answer. If the retrieved context doesn't cover the question, the bot says so and redirects — a non-negotiable rule once the topic is someone's health.",
+      },
+    ],
+    features: [
+      {
+        title: "Grounded answers only",
+        description:
+          "Responses are constrained to what's actually retrieved from the knowledge base — no answer is generated from the model's general training data alone.",
+      },
+      {
+        title: "Warm, plain-language persona",
+        description:
+          "A defined tone of voice — short sentences, no jargon, gentle but factual — because how sensitive health information is delivered matters as much as its accuracy.",
+      },
+      {
+        title: "Streaming chat interface",
+        description:
+          "A Gradio-based chat UI streams tokens as they arrive, so responses feel immediate rather than a long pause followed by a wall of text.",
+      },
+      {
+        title: "Firm topic boundaries",
+        description:
+          "Off-topic or out-of-scope questions get a clear, consistent redirect instead of an improvised answer — keeping the bot inside the boundaries of what it can responsibly speak to.",
+      },
+      {
+        title: "MVP from a founder's vision",
+        description:
+          "Took an early-stage product idea with no technical spec and shaped it into requirements, architecture, and a functioning prototype in a few weeks, pro bono.",
+      },
+    ],
+    quote: {
+      text: "She worked in a structured, solution-oriented way, with a clear eye for product logic and usability — and could always explain complex technical decisions to me, as founder, without losing precision.",
+      author: "Pia Greilich",
+      role: "Founder",
+    },
   },
   "evx-suite": {
     slug: "evx-suite",
@@ -114,11 +192,6 @@ export const projectDetails: Record<string, ProjectDetail> = {
     hero: {
       type: "image",
       src: "/projects/evx/full-app.jpg",
-    },
-    demo: {
-      src: "/projects/evx/engine-player.html",
-      caption:
-        "The Engine Player, running standalone with a real harmonics dataset from the tool — switch between 3D, Top, and Side to explore it live.",
     },
     summary:
       "EVx Suite is a desktop tool NVH/sound engineers use to compose synthetic motor sound for electric vehicles: live vehicle telemetry (speed, load, gear, throttle) drives layered audio samples through pitch, EQ, and gain curves in real time, for both interior cabin sound and exterior AVAS alert sound.",
@@ -178,6 +251,11 @@ export const projectDetails: Record<string, ProjectDetail> = {
           "Designed a consistent icon set for overlay/mute/solo/live-data/collapse/expand states, plus keyboard shortcuts for the most common browser actions.",
       },
     ],
+    quote: {
+      text: "We are consistently impressed by her exceptional technical grasp, paired with a real feel for design and creativity. She's highly engaged, always works in a structured way, and brings incredible enthusiasm to new topics and challenges.",
+      author: "Beat Rossmy",
+      role: "Lead Senior UI/UX Designer & Mentor, Impulse Audio Lab",
+    },
   },
 };
 

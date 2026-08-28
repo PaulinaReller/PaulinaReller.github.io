@@ -30,6 +30,14 @@ import { projects } from "../data/content";
                 ))}
               </div>
             </a>
+            {project.quote && (
+              <blockquote class="quote">
+                <p>“{project.quote.text}”</p>
+                <cite class="mono">
+                  {project.quote.author} — {project.quote.role}
+                </cite>
+              </blockquote>
+            )}
           </article>
         ))
       }
@@ -122,6 +130,25 @@ import { projects } from "../data/content";
     padding: 0.3rem 0.65rem;
     border-radius: 999px;
     color: var(--muted);
+  }
+
+  .quote {
+    border-left: 2px solid var(--line);
+    margin: 1.5rem 0 0;
+    padding: 0.15rem 0 0.15rem 1.25rem;
+  }
+
+  .quote p {
+    margin: 0 0 0.5rem;
+    max-width: 32rem;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    font-style: italic;
+  }
+
+  .quote cite {
+    color: var(--muted);
+    font-style: normal;
   }
 
   @media (width <= 800px) {
