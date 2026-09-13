@@ -1,18 +1,18 @@
 export const profile = {
   name: "Paulina Reller",
   role: "Computer Science & Design",
-  tagline: "Building interfaces where code and craft meet.",
+  description:
+    "Portfolio of Paulina Reller - Computer Science & Design student, frontend developer, and illustrator based in Munich.",
   location: "Munich, Germany",
   email: "paulina.reller@web.de",
   phone: "+49 176 2275516",
   socials: [
-    { label: "GitHub", href: "https://github.com/" },
-    { label: "LinkedIn", href: "https://linkedin.com/" },
+    { label: "GitHub", href: "https://github.com/PaulinaReller" },
     { label: "Email", href: "mailto:paulina.reller@web.de" },
   ],
   about: `I'm a Computer Science & Design student at Hochschule München, working
   student at Impulse Audio Lab, and trained illustrator (B.A. Illustration,
-  HAW Hamburg). I move between code and visual design - building modular,
+  HAW Hamburg). I move between code and visual design, building modular,
   data-heavy frontends by day and murals, editorial illustration, and product
   concepts on the side.`,
 };
@@ -53,25 +53,9 @@ export const projects = [
     href: "/work/studio-b",
     image: "/projects/studio-b/hero-poster.jpg",
     quote: {
-      text: "[Placeholder quote from Barbara - to be replaced with her actual feedback.]",
+      text: "I'm so happy that Paulina built this platform for us. Now my fitness enthusiasts have one place to train together, and we can really be a community.",
       author: "Barbara",
       role: "Founder, Studio B",
-    },
-  },
-  {
-    title: "KIM4U",
-    subtitle: "RAG Chatbot Prototype for Endometriosis Support",
-    org: "with Pia Greilich",
-    period: "08/2025 - 09/2025",
-    description:
-      "Pro-bono technical prototype for a founder's healthcare-ecosystem idea: a retrieval-augmented chatbot that answers endometriosis questions from a curated knowledge base instead of the open web.",
-    tags: ["RAG", "Python", "ChromaDB", "OpenAI API", "Gradio"],
-    href: "/work/kim4u",
-    image: "/projects/kim4u/hero-placeholder.svg",
-    quote: {
-      text: "She worked in a structured, solution-oriented way, with a clear eye for product logic and usability - and could always explain complex technical decisions to me, as founder, without losing precision.",
-      author: "Pia Greilich",
-      role: "Founder",
     },
   },
   {
@@ -90,27 +74,72 @@ export const projects = [
       role: "Lead Senior UI/UX Designer & Mentor, Impulse Audio Lab",
     },
   },
+  {
+    title: "KIM4U",
+    subtitle: "RAG Chatbot Prototype for Endometriosis Support",
+    org: "with Pia Greilich",
+    period: "08/2025 - 09/2025",
+    description:
+      "Pro-bono technical prototype for a founder's healthcare-ecosystem idea: a retrieval-augmented chatbot that answers endometriosis questions from a curated knowledge base instead of the open web.",
+    tags: ["RAG", "Python", "ChromaDB", "OpenAI API", "Gradio"],
+    href: "/work/kim4u",
+    image: "/projects/kim4u/hero-placeholder.svg",
+    quote: {
+      text: "She worked in a structured, solution-oriented way, with a clear eye for product logic and usability - and could always explain complex technical decisions to me, as founder, without losing precision.",
+      author: "Pia Greilich",
+      role: "Founder",
+    },
+  },
 ];
 
 export const skills = {
   design: [
-    "User Research & Usability Testing",
-    "User Interface",
-    "User Experience",
-    "Wireframing & Prototyping",
-    "Accessibility Standards",
+    { name: "UI/UX Design", level: 4 },
+    { name: "Interaction Design", level: 4 },
+    { name: "Prototyping", level: 4 },
+    { name: "Wireframing", level: 4 },
+    { name: "Visual Design Principles", level: 4 },
+    { name: "Web Design", level: 4 },
+    { name: "User Research", level: 4 },
+    { name: "Creative Techniques", level: 4 },
+    { name: "Usability Testing", level: 3 },
+    { name: "User Interviews", level: 3 },
+    { name: "Accessibility Standards", level: 3 },
+  ],
+  engineering: [
+    { name: "Software Development", level: 4 },
+    { name: "Software Engineering", level: 4 },
+    { name: "Component-Based Architecture", level: 4 },
+    { name: "Computational Thinking", level: 4 },
+    { name: "Web-Based Applications", level: 4 },
+    { name: "Mobile Application Development", level: 4 },
+    { name: "Full-Stack Development", level: 3 },
+    { name: "Web Technologies", level: 3 },
+    { name: "Artificial Intelligence", level: 3 },
   ],
   tools: [
-    "GitLab",
-    "Figma",
-    "Data Visualization",
-    "Next.js",
-    "CI/CD",
-    "Supabase / PostgreSQL",
-    "Vercel",
+    { name: "Figma", level: 5 },
+    { name: "GitLab", level: 4 },
+    { name: "Data Visualization", level: 4 },
+    { name: "Supabase", level: 4 },
+    { name: "Vercel", level: 4 },
+    { name: "Stripe", level: 4 },
+    { name: "Cloudflare", level: 3 },
+    { name: "Next.js", level: 3 },
+    { name: "PostgreSQL", level: 3 },
+    { name: "Authentication & RLS", level: 3 },
+    { name: "CI/CD", level: 2 },
   ],
-  languages: ["JavaScript", "Svelte", "Python", "TypeScript"],
-  spoken: ["German (native)", "English (professional)"],
+  languages: [
+    { name: "Svelte", level: 4 },
+    { name: "JavaScript", level: 3 },
+    { name: "TypeScript", level: 3 },
+    { name: "Python", level: 3 },
+  ],
+  spoken: [
+    { name: "German (native)" },
+    { name: "English (professional)" },
+  ],
 };
 
 export const education = [

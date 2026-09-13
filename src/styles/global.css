@@ -19,6 +19,11 @@ html {
   background: var(--paper);
 }
 
+section[id],
+[id="top"] {
+  scroll-margin-top: 6rem;
+}
+
 body {
   color: var(--ink);
   background: var(--paper);
@@ -76,14 +81,6 @@ textarea {
   font-family: "DM Mono", monospace;
   font-size: 0.72rem;
   display: flex;
-}
-
-.eyebrow::before {
-  content: "";
-  background: var(--acid);
-  border-radius: 50%;
-  width: 0.5rem;
-  height: 0.5rem;
 }
 
 .display {

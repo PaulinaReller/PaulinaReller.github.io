@@ -1,8 +1,11 @@
 ---
 import { experience, skills } from "../data/content";
 
-const services = [
+type Skill = { name: string; level?: number };
+
+const services: { label: string; items: Skill[] }[] = [
   { label: "Design", items: skills.design },
+  { label: "Engineering", items: skills.engineering },
   { label: "Tools & Workflows", items: skills.tools },
   { label: "Languages", items: skills.languages },
   { label: "Spoken", items: skills.spoken },
@@ -43,7 +46,11 @@ const services = [
       services.map((service) => (
         <div class="service">
           <h3>{service.label}</h3>
-          <p>{service.items.join(" · ")}</p>
+          <p class="skill-list">
+            {service.items.map((item) => (
+              <span class="skill">{item.name}</span>
+            ))}
+          </p>
           <span class="arrow">↗</span>
         </div>
       ))
@@ -168,7 +175,7 @@ const services = [
     display: grid;
   }
 
-  .service:last-child {
+  .service:last-of-type {
     border-bottom: 1px solid var(--ink);
   }
 
@@ -183,11 +190,21 @@ const services = [
     line-height: 1;
   }
 
-  .service p {
+  .skill-list {
+    flex-wrap: wrap;
+    gap: 0.35rem 0.5rem;
     margin: 0;
-    color: var(--ink);
-    opacity: 0.8;
-    font-size: 0.95rem;
+    display: flex;
+  }
+
+  .skill {
+    border: 1px solid color-mix(in srgb, var(--ink) 35%, transparent);
+    border-radius: 999px;
+    align-items: baseline;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.85rem;
+    line-height: 1.2;
+    display: inline-flex;
   }
 
   .service .arrow {
@@ -213,7 +230,7 @@ const services = [
       grid-template-columns: 1fr auto;
     }
 
-    .service p {
+    .skill-list {
       display: none;
     }
   }

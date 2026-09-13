@@ -5,7 +5,19 @@ import { profile, education } from "../data/content";
 <section id="about" class="about">
   <div class="container">
     <div class="about-grid">
-      <h2 class="section-title">About</h2>
+      <div class="about-intro">
+        <h2 class="section-title">About</h2>
+        <div class="portrait">
+          <img
+            src="/about/paulina.jpg"
+            alt="Portrait of Paulina Reller"
+            width="800"
+            height="800"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </div>
       <div class="about-body">
         <p class="lede">{profile.about}</p>
 
@@ -38,6 +50,28 @@ import { profile, education } from "../data/content";
     grid-template-columns: 1fr 2fr;
     gap: 3rem;
     display: grid;
+  }
+
+  .about-intro {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+    display: flex;
+  }
+
+  .portrait {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    flex: 0 0 auto;
+    width: min(100%, 15rem);
+    overflow: hidden;
+  }
+
+  .portrait img {
+    object-fit: cover;
+    object-position: 50% 30%;
+    width: 100%;
+    height: 100%;
   }
 
   .lede {
@@ -85,6 +119,16 @@ import { profile, education } from "../data/content";
     .about-grid {
       grid-template-columns: 1fr;
       gap: 2rem;
+    }
+
+    .about-intro {
+      flex-direction: row;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .portrait {
+      width: 8rem;
     }
 
     .edu-row {

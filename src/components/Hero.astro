@@ -24,25 +24,11 @@ import { profile } from "../data/content";
     </h1>
 
     <div class="hero-bottom">
-      <p class="mono"><span class="orb"></span>{profile.location}</p>
-      <p>{profile.tagline}</p>
+      <p class="mono">{profile.location}</p>
       <a href="#work" class="button">See the work</a>
     </div>
   </div>
 </section>
-
-<div class="statement">
-  <div class="container statement-grid">
-    <h2>
-      Less polish. <em>More</em> proof it works.
-    </h2>
-    <p>
-      I move between code and visual design - building modular, data-heavy
-      frontends by day, and murals, editorial illustration, and product
-      concepts on the side.
-    </p>
-  </div>
-</div>
 
 <style>
   .hero {
@@ -96,69 +82,17 @@ import { profile } from "../data/content";
     color: var(--acid);
   }
 
-  .orb {
-    aspect-ratio: 1;
-    vertical-align: -0.05em;
-    background: var(--acid);
-    border-radius: 50%;
-    width: 0.68em;
-    margin-right: 0.4em;
-    display: inline-block;
-  }
-
   .hero-bottom {
     border-top: 1px solid var(--ink);
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr auto;
     align-items: end;
     gap: 2rem;
     padding-top: 1.5rem;
     display: grid;
   }
 
-  .hero-bottom p:nth-child(2) {
-    white-space: nowrap;
-    margin: 0;
-    font-size: clamp(1rem, 1.5vw, 1.35rem);
-  }
-
   .hero-bottom .button {
     justify-self: end;
-  }
-
-  .statement {
-    background: var(--ink);
-    color: var(--paper);
-    overflow: hidden;
-  }
-
-  .statement-grid {
-    grid-template-columns: 1fr 3fr;
-    padding-top: clamp(5rem, 10vw, 10rem);
-    padding-bottom: clamp(5rem, 10vw, 10rem);
-    display: grid;
-  }
-
-  .statement h2 {
-    letter-spacing: -0.075em;
-    grid-column: 2;
-    margin: 0;
-    font-size: clamp(4rem, 10vw, 10rem);
-    line-height: 0.9;
-    font-weight: 800;
-  }
-
-  .statement h2 em {
-    color: var(--acid);
-    font-family: Georgia, serif;
-    font-weight: 400;
-    font-style: italic;
-  }
-
-  .statement-grid > p:last-child {
-    grid-column: 2;
-    max-width: 36rem;
-    margin: 4rem 0 0;
-    font-size: clamp(1.2rem, 2vw, 1.8rem);
   }
 
   @media (width <= 800px) {
@@ -194,19 +128,6 @@ import { profile } from "../data/content";
 
     .hero-bottom .button {
       justify-self: start;
-    }
-
-    .hero-bottom > p:first-child {
-      display: none;
-    }
-
-    .statement-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .statement h2,
-    .statement-grid > p:last-child {
-      grid-column: 1;
     }
   }
 </style>

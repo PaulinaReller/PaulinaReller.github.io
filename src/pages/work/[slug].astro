@@ -12,6 +12,8 @@ export function getStaticPaths() {
 }
 
 const { project } = Astro.props;
+
+const liveHost = project.liveUrl?.replace(/^https?:\/\//, "").replace(/\/$/, "");
 ---
 
 <Layout title={`${project.title} - Paulina Reller`} description={project.summary}>
@@ -23,6 +25,21 @@ const { project } = Astro.props;
 
         <h1>{project.title}</h1>
         <p class="subtitle">{project.subtitle}</p>
+
+        {
+          project.liveUrl && (
+            <a
+              class="live-link"
+              href={project.liveUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span class="mono live-label">{project.liveLabel ?? "Live site"}</span>
+              <b>{liveHost}</b>
+              <span class="live-arrow" aria-hidden="true">↗</span>
+            </a>
+          )
+        }
 
         <div class="meta">
           <div>
@@ -223,6 +240,38 @@ const { project } = Astro.props;
     margin: 1.5rem 0 0;
     font-size: clamp(1.1rem, 2vw, 1.5rem);
     color: var(--muted);
+  }
+
+  .live-link {
+    background: var(--acid);
+    color: var(--ink);
+    border-radius: 999px;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 2rem;
+    padding: 0.7rem 1.4rem;
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    text-decoration: none;
+    transition: transform 0.25s, box-shadow 0.25s;
+    display: inline-flex;
+  }
+
+  .live-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0.6rem 1.4rem color-mix(in srgb, var(--ink) 22%, transparent);
+  }
+
+  .live-label {
+    font-size: 0.72rem;
+  }
+
+  .live-link b {
+    letter-spacing: -0.01em;
+    font-weight: 700;
+  }
+
+  .live-arrow {
+    font-size: 1.1em;
   }
 
   .meta {

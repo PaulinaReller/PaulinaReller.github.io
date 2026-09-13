@@ -12,6 +12,8 @@ export type ProjectDetail = {
   org: string;
   period: string;
   role: string;
+  liveUrl?: string;
+  liveLabel?: string;
   hero: ProjectHero;
   screens?: { src: string; label: string }[];
   screensNote?: string;
@@ -32,6 +34,7 @@ export const projectDetails: Record<string, ProjectDetail> = {
     org: "Wellbewell GmbH",
     period: "07/2025 - Present",
     role: "Solo full-stack developer - architecture, backend, frontend, deployment",
+    liveUrl: "https://studiob-online.de",
     hero: {
       type: "typo",
       words: ["Strength", "Mobility", "Balance", "Stretch", "Recovery"],
@@ -47,14 +50,14 @@ export const projectDetails: Record<string, ProjectDetail> = {
     screensNote:
       "Live captures of the test build - landing page, the editorial series overview, and a series detail page in the Vimeo On Demand style.",
     summary:
-      "Barbara, a fitness trainer with a following built on in-person classes, wanted to turn her workout series into a recurring subscription product - one calm, single €9.99/month plan that unlocks everything, aimed at an audience 50 and older who don't want to think about tiers or à-la-carte pricing.",
+      "Barbara, a fitness trainer with a following built on in-person classes, wanted to turn her workout series into a recurring subscription product: one calm, single €9.99/month plan that unlocks everything, aimed at an audience 50 and older who don't want to think about tiers or à-la-carte pricing.",
     problem:
       "The target audience is 50 plus: large type, a calm layout, no cluttered menus, and no friction between \"I want to work out\" and actually starting the video. At the same time the business needed real subscription mechanics - trial periods, cancellation, refunds - without a subscription engineer on the team.",
     approach: [
       {
         title: "Frontend & backend logic",
         description:
-          "Next.js App Router serves the pages and also owns the access decisions - server components check subscription status before ever rendering a play button.",
+          "Next.js App Router serves the pages and also owns the access decisions. Server components check subscription status before ever rendering a play button.",
       },
       {
         title: "Stripe",
@@ -69,7 +72,7 @@ export const projectDetails: Record<string, ProjectDetail> = {
       {
         title: "Cloudflare Stream",
         description:
-          "Planned final step - video never sits at an open URL. The backend confirms payment first, then issues a short-lived signed URL, so the paywall is enforced at the delivery layer, not just the UI.",
+          "Planned final step. Video never sits at an open URL. The backend confirms payment first, then issues a short-lived signed URL, so the paywall is enforced at the delivery layer, not just the UI.",
       },
     ],
     features: [
@@ -105,7 +108,7 @@ export const projectDetails: Record<string, ProjectDetail> = {
       },
     ],
     quote: {
-      text: "[Placeholder quote from Barbara - to be replaced with her actual feedback.]",
+      text: "I'm so happy that Paulina built this platform for us. Now my fitness enthusiasts have one place to train together, and we can really be a community.",
       author: "Barbara",
       role: "Founder, Studio B",
     },
@@ -116,19 +119,19 @@ export const projectDetails: Record<string, ProjectDetail> = {
     subtitle:
       "A RAG chatbot prototype supporting people affected by endometriosis",
     client: "Pia Greilich",
-    org: "Independent - pro bono",
+    org: "Independent (pro bono)",
     period: "08/2025 - 09/2025",
-    role: "Solo developer - technical concept, architecture, and prototype build (pro bono)",
+    role: "Solo developer: technical concept, architecture, and prototype build (pro bono)",
     hero: { type: "orb" },
     summary:
       "Pia Greilich was building the founding idea for an AI-based healthcare ecosystem for endometriosis: a way for people navigating the condition to get clear, trustworthy answers without wading through forums or generic web search. She brought me on pro bono to turn that vision into a working technical prototype.",
     problem:
-      "Endometriosis is under-researched and often poorly explained even in medical settings, so people affected by it end up self-diagnosing from scattered, inconsistent sources - never quite sure what's reliable. A general-purpose chatbot wasn't an option: in a health context it has to answer only from vetted material, say plainly when it doesn't know, and never improvise on someone's symptoms.",
+      "Endometriosis is under-researched and often poorly explained even in medical settings, so people affected by it end up self-diagnosing from scattered, inconsistent sources, never quite sure what's reliable. A general-purpose chatbot wasn't an option: in a health context it has to answer only from vetted material, say plainly when it doesn't know, and never improvise on someone's symptoms.",
     approach: [
       {
         title: "Knowledge base",
         description:
-          "Source material is split into topic-based JSON documents, each entry carrying its own text and metadata - the same structure I'd use for any domain, swapped here from household how-tos to endometriosis information.",
+          "Source material is split into topic-based JSON documents, each entry carrying its own text and metadata, the same structure I'd use for any domain, swapped here from household how-tos to endometriosis information.",
       },
       {
         title: "Vector store (Chroma)",
@@ -143,19 +146,19 @@ export const projectDetails: Record<string, ProjectDetail> = {
       {
         title: "Guardrails over confidence",
         description:
-          "The system prompt is explicit: never invent an answer. If the retrieved context doesn't cover the question, the bot says so and redirects - a non-negotiable rule once the topic is someone's health.",
+          "The system prompt is explicit: never invent an answer. If the retrieved context doesn't cover the question, the bot says so and redirects, a non-negotiable rule once the topic is someone's health.",
       },
     ],
     features: [
       {
         title: "Grounded answers only",
         description:
-          "Responses are constrained to what's actually retrieved from the knowledge base - no answer is generated from the model's general training data alone.",
+          "Responses are constrained to what's actually retrieved from the knowledge base; no answer is generated from the model's general training data alone.",
       },
       {
         title: "Warm, plain-language persona",
         description:
-          "A defined tone of voice - short sentences, no jargon, gentle but factual - because how sensitive health information is delivered matters as much as its accuracy.",
+          "A defined tone of voice (short sentences, no jargon, gentle but factual), because how sensitive health information is delivered matters as much as its accuracy.",
       },
       {
         title: "Streaming chat interface",
@@ -165,7 +168,7 @@ export const projectDetails: Record<string, ProjectDetail> = {
       {
         title: "Firm topic boundaries",
         description:
-          "Off-topic or out-of-scope questions get a clear, consistent redirect instead of an improvised answer - keeping the bot inside the boundaries of what it can responsibly speak to.",
+          "Off-topic or out-of-scope questions get a clear, consistent redirect instead of an improvised answer, keeping the bot inside the boundaries of what it can responsibly speak to.",
       },
       {
         title: "MVP from a founder's vision",
@@ -186,7 +189,9 @@ export const projectDetails: Record<string, ProjectDetail> = {
       "A real-time sound-design tool for synthetic electric vehicle sound",
     org: "Impulse Audio Lab",
     period: "10/2024 - Present",
-    role: "Frontend developer (Svelte) on a ~8-person C++/Svelte team - owned the sample-library Browser panel end to end",
+    liveUrl: "https://impulse-audio-lab.com",
+    liveLabel: "Impulse Audio Lab",
+    role: "Frontend developer (Svelte) on a ~8-person C++/Svelte team. Owned the sample-library Browser panel end to end, introduced a component-based Figma board for the team, and built a Code Connect plugin linking it to our repository",
     hero: {
       type: "image",
       src: "/projects/evx/full-app.jpg",
@@ -194,17 +199,17 @@ export const projectDetails: Record<string, ProjectDetail> = {
     summary:
       "EVx Suite is a desktop tool NVH/sound engineers use to compose synthetic motor sound for electric vehicles: live vehicle telemetry (speed, load, gear, throttle) drives layered audio samples through pitch, EQ, and gain curves in real time, for both interior cabin sound and exterior AVAS alert sound.",
     problem:
-      "Sound designers work against sample libraries with hundreds of audio files and overlays across many modules, while live-tuning curves against real vehicle data. The existing file browser was a single flat, unsearchable list - no folders, no tags, no way to preview or organize as the team's library kept growing, which made finding and reusing the right sample a constant bottleneck.",
+      "Sound designers work against sample libraries with hundreds of audio files and overlays across many modules, while live-tuning curves against real vehicle data. The frontend's job is to take that complexity off their shoulders: deeply technical, real-time audio problems need an interface that stays calm, legible, and fast enough to keep up with a designer's thinking.",
     approach: [
       {
         title: "C++ audio core",
         description:
-          "The synthesis and DSP engine - sample playback, pitching, cascading, EQ, gain curves - runs natively in C++, driven in real time by incoming vehicle data (speed, load, throttle, gear).",
+          "The synthesis and DSP engine (sample playback, pitching, cascading, EQ, gain curves) runs natively in C++, driven in real time by incoming vehicle data (speed, load, throttle, gear).",
       },
       {
         title: "Webview bridge",
         description:
-          "A native OS webview embeds the GUI and exchanges JSON messages with the C++ core in both directions - parameter changes, file commands, live meter data.",
+          "A native OS webview embeds the GUI and exchanges JSON messages with the C++ core in both directions: parameter changes, file commands, live meter data.",
       },
       {
         title: "Svelte component library",
@@ -212,16 +217,16 @@ export const projectDetails: Record<string, ProjectDetail> = {
           "The frontend is a from-scratch atomic design system (atoms → molecules → organisms) in Svelte 5, developed and documented in isolation with Storybook.",
       },
       {
-        title: "Browser panel",
+        title: "Figma board & Code Connect",
         description:
-          "My focus: the organism that lets a sound designer find, tag, and drag a sample into any module in the rack, built on top of that shared component library.",
+          "I set up a component-based Figma board mirroring that library and wrote a Code Connect plugin that ties it to our repository, so the team wireframes with the real components instead of redrawing them.",
       },
     ],
     features: [
       {
         title: "Tabbed library",
         description:
-          "Replaced the old single flat file list with four dedicated tabs - Audio, Overlay, Eone, and Settings - each with its own tree view and content rules.",
+          "Replaced the old single flat file list with four dedicated tabs (Audio, Overlay, Eone, and Settings), each with its own tree view and content rules.",
       },
       {
         title: "Search, sort & tags",
@@ -236,12 +241,12 @@ export const projectDetails: Record<string, ProjectDetail> = {
       {
         title: "Resizable, foldable panel",
         description:
-          "A custom layout shell - drag-to-resize with clamped bounds, a fold/unfold rail, and per-tab footers (including an inline audio player) that adapt to the open tab.",
+          "A custom layout shell: drag-to-resize with clamped bounds, a fold/unfold rail, and per-tab footers (including an inline audio player) that adapt to the open tab.",
       },
       {
         title: "Tree abstraction",
         description:
-          "Extracted the recursive nesting logic into a domain-free Tree component, separate from BrowserTree's behaviour (search, selection, drag, context menus) - so it can be reused anywhere else in the app.",
+          "Extracted the recursive nesting logic into a domain-free Tree component, separate from BrowserTree's behaviour (search, selection, drag, context menus), so it can be reused anywhere else in the app.",
       },
       {
         title: "Custom icon set & hotkeys",
